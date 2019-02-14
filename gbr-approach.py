@@ -50,7 +50,7 @@ X_test = test.loc[:, feature_cols]
 y_test = np.array(test["Band gap [eV]"].values).astype(float)
 
 #creating regressor and fitting data
-params = {'n_estimators': 500, 'max_depth': 12, 'min_samples_split': 3,
+params = {'n_estimators': 1000, 'max_depth': 4, 'min_samples_split': 3,
           'learning_rate': 0.2, 'loss': 'ls'}
 reg = GradientBoostingRegressor(**params)
 
@@ -67,6 +67,9 @@ test_score = np.zeros((params['n_estimators'],), dtype=np.float64)
 for i, y_pred in enumerate(reg.staged_predict(X_test)):
     test_score[i] = reg.loss_(y_test, y_pred)
 
+#write file
+bigdata = pd.concat([data1, data2], ignore_index=True)
+
 plt.figure(figsize=(12, 6))
 plt.subplot(1, 2, 1)
 plt.title('Deviance')
@@ -78,7 +81,7 @@ plt.legend(loc='upper right')
 plt.xlabel('Boosting Iterations')
 plt.ylabel('Deviance')
 
-# #############################################################################
+# ############################################################################
 # Plot feature importance
 feature_importance = reg.feature_importances_
 # make importances relative to max importance
