@@ -68,7 +68,8 @@ for i, y_pred in enumerate(reg.staged_predict(X_test)):
     test_score[i] = reg.loss_(y_test, y_pred)
 
 #write file
-bigdata = pd.concat([data1, data2], ignore_index=True)
+output = pd.concat([X_test, pd.DataFrame(y_test),pd.DataFrame(y_pred)], ignore_index=True)
+output.to_csv("results.csv")
 
 plt.figure(figsize=(12, 6))
 plt.subplot(1, 2, 1)
