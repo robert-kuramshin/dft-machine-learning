@@ -35,6 +35,8 @@ feature_cols = [
 for feature in feature_cols:
     csv_data = csv_data[csv_data[feature] != "-"]
 
+csv_data = csv_data[csv_data["Band gap [eV]"] != "0.000"]
+
 #test train split
 length = csv_data.shape[0]
 train_size = int(length*(1-test_split_amount))
@@ -50,8 +52,7 @@ X_test = test.loc[:, feature_cols]
 y_test = np.array(test["Band gap [eV]"].values).astype(float)
 
 #creating regressor and fitting data
-params = {'n_estimators': 1000, 'max_depth': 4, 'min_samples_split': 3,
-          'learning_rate': 0.2, 'loss': 'ls'}
+params = {'n_estimators': 750, 'max_depth': 4, 'learning_rate': 0.05, 'loss': 'ls', 'min_samples_split': 2}
 reg = GradientBoostingRegressor(**params)
 
 reg.fit(X_train, y_train)
