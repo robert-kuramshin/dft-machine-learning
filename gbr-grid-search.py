@@ -45,8 +45,8 @@ y = csv_data["Band gap [eV]"]
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.5, random_state=0)
 
-tuned_parameters = [{'n_estimators': [10,100,250,500,1000], 'max_depth': [4,8,12,16], 'min_samples_split': [2,3,4],
-          'learning_rate': [0.01,0.1,0.2], 'loss': ['ls']}]
+tuned_parameters = [{'n_estimators': [250,500,750,1000], 'max_depth': [4,8,12,16], 'min_samples_split': [2,3,4],
+          'learning_rate': [0.01,0.05,0.1,0.2], 'loss': ['ls']}]
 
 scores = ['neg_mean_squared_error', 'r2']
 
