@@ -31,6 +31,23 @@ feature_cols = [
 "Vacancy energy [eV/O atom]"
 ]
 
+
+feature_names = [
+"Radius A",
+"Radius B",
+"Formation energy",
+"Stability",
+"Magnetic moment",
+"Volume per atom",
+"a",
+"b",
+"c",
+"alpha",
+"beta",
+"gamma",
+"Vacancy energy"
+]
+
 #remove rows with missing feature values
 for feature in feature_cols:
     csv_data = csv_data[csv_data[feature] != "-"]
@@ -73,7 +90,7 @@ output = pd.concat([X_test, pd.DataFrame(y_test),pd.DataFrame(y_pred)], ignore_i
 output.to_csv("results.csv")
 
 plt.figure(figsize=(12, 6))
-plt.subplot(1, 2, 1)
+plt.subplot(2, 1, 1)
 plt.title('Deviance')
 plt.plot(np.arange(params['n_estimators']) + 1, reg.train_score_, 'b-',
          label='Training Set Deviance')
@@ -90,10 +107,10 @@ feature_importance = reg.feature_importances_
 feature_importance = 100.0 * (feature_importance / feature_importance.max())
 sorted_idx = np.argsort(feature_importance)
 pos = np.arange(sorted_idx.shape[0]) + .5
-plt.subplot(1, 2, 2)
+plt.subplot(2, 1, 2)
 plt.barh(pos, feature_importance[sorted_idx], align='center')
-feature_cols = [feature_cols[i] for i in sorted_idx]
-plt.yticks(pos, feature_cols)
+feature_names = [feature_names[i] for i in sorted_idx]
+plt.yticks(pos, feature_names)
 plt.xlabel('Relative Importance')
 plt.title('Variable Importance')
 plt.show()
