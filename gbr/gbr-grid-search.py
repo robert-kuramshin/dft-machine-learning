@@ -9,7 +9,7 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import mean_squared_error
 
 #read data
-csv_data = pd.read_csv("data/processed.csv")
+csv_data = pd.read_csv("../data/processed.csv")
 
 #random shuffle
 csv_data.sample(frac=1)
