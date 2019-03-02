@@ -26,10 +26,8 @@ feature_cols = [
 "Goldschmidt Tolerance Factor",
 "A Electronegativity",
 "B Electronegativity",
-"C Electronegativity",
 "A Ionization Energy",
 "B Ionization Energy",
-"C Ionization Energy",
 ]
 
 X = csv_data.loc[:, feature_cols]
@@ -45,7 +43,7 @@ X_train = scaler.transform(X_train)
 
 X_test = scaler.transform(X_test)  
 
-tuned_parameters = [{"hidden_layer_sizes":[{5,},{10,},{25,},{50,},{4,2,},{8,3,}],"max_iter":[2000],"activation":["identity", "logistic", "tanh", "relu"],"learning_rate_init":[0.0001,0.001,0.01,0.1]}]
+tuned_parameters = [{"hidden_layer_sizes":[{10,},{25,},{50,},{100,}],"max_iter":[5000],"activation":["identity", "logistic", "tanh", "relu"],"learning_rate_init":[0.0001,0.001,0.01,0.1],"solver":['lbfgs', 'adam']}]
 
 
 clf = GridSearchCV(MLPRegressor(), tuned_parameters, cv=5)
