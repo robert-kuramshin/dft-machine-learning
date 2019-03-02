@@ -7,7 +7,7 @@ from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
-test_split_amount = 0.1 #20% of data is reserved for test
+test_split_amount = 0.2 #20% of data is reserved for test
 
 #read data
 csv_data = pd.read_csv("../data/processed.csv")
@@ -24,10 +24,10 @@ feature_cols = [
 "Goldschmidt Tolerance Factor",
 "A Electronegativity",
 "B Electronegativity",
-"C Electronegativity",
 "A Ionization Energy",
 "B Ionization Energy",
-"C Ionization Energy",
+"Octahedral Factor",
+"Tolerance Factor",
 ]
 
 
@@ -37,12 +37,12 @@ feature_names = [
 "Formation energy",
 "Volume per atom",
 "Goldschmidt Tolerance Factor",
-"A EN",
-"B EN",
-"C EN",
-"A IE",
-"B IE",
-"C IE",
+"A Electronegativity",
+"B Electronegativity",
+"A Ionization Energy",
+"B Ionization Energy",
+"Octahedral Factor",
+"Tolerance Factor",
 ]
 
 #test train split

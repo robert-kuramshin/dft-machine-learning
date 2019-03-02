@@ -24,10 +24,10 @@ feature_cols = [
 "Goldschmidt Tolerance Factor",
 "A Electronegativity",
 "B Electronegativity",
-"C Electronegativity",
 "A Ionization Energy",
 "B Ionization Energy",
-"C Ionization Energy",
+"Octahedral Factor",
+"Tolerance Factor",
 ]
 
 

@@ -8,7 +8,7 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 from sklearn.metrics import r2_score
 
-test_split_amount = 0.1 #10% of data is reserved for test
+test_split_amount = 0.2 #10% of data is reserved for test
 
 #read data
 csv_data = pd.read_csv("../data/processed.csv")
@@ -25,10 +25,10 @@ feature_cols = [
 "Goldschmidt Tolerance Factor",
 "A Electronegativity",
 "B Electronegativity",
-"C Electronegativity",
 "A Ionization Energy",
 "B Ionization Energy",
-"C Ionization Energy",
+"Octahedral Factor",
+"Tolerance Factor",
 ]
 
 
@@ -38,12 +38,12 @@ feature_names = [
 "Formation energy",
 "Volume per atom",
 "Goldschmidt Tolerance Factor",
-"A EN",
-"B EN",
-"C EN",
-"A IE",
-"B IE",
-"C IE",
+"A Electronegativity",
+"B Electronegativity",
+"A Ionization Energy",
+"B Ionization Energy",
+"Octahedral Factor",
+"Tolerance Factor",
 ]
 
 #test train split
@@ -61,7 +61,7 @@ X_test = test.loc[:, feature_cols]
 y_test = np.array(test["Band gap [eV]"].values).astype(float)
 
 #creating regressor and fitting data
-params = {'max_depth': 4, 'loss': 'ls', 'min_samples_split': 4, 'learning_rate': 0.05, 'n_estimators': 500}
+params = {'min_samples_split': 4, 'n_estimators': 500, 'loss': 'ls', 'learning_rate': 0.2, 'max_depth': 4}
 reg = GradientBoostingRegressor(**params)
 
 reg.fit(X_train, y_train)
