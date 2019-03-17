@@ -5,15 +5,13 @@ import matplotlib
 import matplotlib.pyplot as plt
 from sklearn.kernel_ridge import KernelRidge
 from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import StandardScaler  
 import matplotlib.pyplot as plt
 
-test_split_amount = 0.1 #20% of data is reserved for test
-
 #read data
-csv_data = pd.read_csv("../data/processed.csv")
+test = pd.read_csv("../data/test.csv")
+train = pd.read_csv("../data/train.csv")
 
-#random shuffle
-csv_data.sample(frac=1)
 
 #specify feature column names
 feature_cols = [
@@ -45,19 +43,23 @@ feature_names = [
 "C IE",
 ]
 
-#test train split
-length = csv_data.shape[0]
-train_size = int(length*(1-test_split_amount))
-
-train = csv_data[:train_size]
-test = csv_data[train_size:]
-
 #splitting into dependant and independant variables
 X_train = train.loc[:, feature_cols]
 y_train = train["Band gap [eV]"]
 
 X_test = test.loc[:, feature_cols]
-y_test = np.array(test["Band gap [eV]"].values).astype(float)
+y_test = test["Band gap [eV]"]
+
+print(X_train)
+print(y_train)
+
+scaler = StandardScaler()  
+
+scaler.fit(X_train)  
+
+X_train = scaler.transform(X_train)  
+
+X_test = scaler.transform(X_test)  
 
 #creating regressor and fitting data
 params = {'alpha': 0.01, 'kernel': 'rbf'}

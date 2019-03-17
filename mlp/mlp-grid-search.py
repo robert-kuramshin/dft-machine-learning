@@ -12,10 +12,9 @@ from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()  
 
 #read data
-csv_data = pd.read_csv("../data/processed.csv")
+test = pd.read_csv("../data/test.csv")
+train = pd.read_csv("../data/train.csv")
 
-#random shuffle
-csv_data.sample(frac=1)
 
 #specify feature column names
 feature_cols = [
@@ -28,14 +27,31 @@ feature_cols = [
 "B Electronegativity",
 "A Ionization Energy",
 "B Ionization Energy",
+"Octahedral Factor",
+"Tolerance Factor",
 ]
 
-X = csv_data.loc[:, feature_cols]
-y = csv_data["Band gap [eV]"]
 
-# Split the dataset in two equal parts
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=0)
+feature_names = [
+"Radius A",
+"Radius B",
+"Formation energy",
+"Volume per atom",
+"Goldschmidt Tolerance Factor",
+"A EN",
+"B EN",
+"C EN",
+"A IE",
+"B IE",
+"C IE",
+]
+
+#splitting into dependant and independant variables
+X_train = train.loc[:, feature_cols]
+y_train = train["Band gap [eV]"]
+
+X_test = test.loc[:, feature_cols]
+y_test = test["Band gap [eV]"]
 
 scaler.fit(X_train)  
 

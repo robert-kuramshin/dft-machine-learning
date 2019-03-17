@@ -7,13 +7,10 @@ from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
-test_split_amount = 0.2 #20% of data is reserved for test
-
 #read data
-csv_data = pd.read_csv("../data/processed.csv")
+test = pd.read_csv("../data/test.csv")
+train = pd.read_csv("../data/train.csv")
 
-#random shuffle
-csv_data.sample(frac=1)
 
 #specify feature column names
 feature_cols = [
@@ -45,22 +42,15 @@ feature_names = [
 "Tolerance Factor",
 ]
 
-#test train split
-length = csv_data.shape[0]
-train_size = int(length*(1-test_split_amount))
-
-train = csv_data[:train_size]
-test = csv_data[train_size:]
-
 #splitting into dependant and independant variables
 X_train = train.loc[:, feature_cols]
 y_train = train["Band gap [eV]"]
 
 X_test = test.loc[:, feature_cols]
-y_test = np.array(test["Band gap [eV]"].values).astype(float)
+y_test = test["Band gap [eV]"]
 
 #creating regressor and fitting data
-params = {'max_depth': 4, 'loss': 'ls', 'min_samples_split': 4, 'learning_rate': 0.05, 'n_estimators': 500}
+params = {'loss': 'ls', 'max_depth': 4, 'learning_rate': 0.1, 'min_samples_split': 3, 'n_estimators': 500}
 reg = GradientBoostingRegressor(**params)
 
 reg.fit(X_train, y_train)

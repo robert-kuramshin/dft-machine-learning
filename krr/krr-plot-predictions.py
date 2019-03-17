@@ -8,13 +8,10 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 from sklearn.metrics import r2_score
 
-test_split_amount = 0.1 #10% of data is reserved for test
-
 #read data
-csv_data = pd.read_csv("../data/processed.csv")
+test = pd.read_csv("../data/test.csv")
+train = pd.read_csv("../data/train.csv")
 
-#random shuffle
-csv_data.sample(frac=1)
 
 #specify feature column names
 feature_cols = [
@@ -25,10 +22,10 @@ feature_cols = [
 "Goldschmidt Tolerance Factor",
 "A Electronegativity",
 "B Electronegativity",
-"C Electronegativity",
 "A Ionization Energy",
 "B Ionization Energy",
-"C Ionization Energy",
+"Octahedral Factor",
+"Tolerance Factor",
 ]
 
 
@@ -46,26 +43,21 @@ feature_names = [
 "C IE",
 ]
 
-#test train split
-length = csv_data.shape[0]
-train_size = int(length*(1-test_split_amount))
-
-train = csv_data[:train_size]
-test = csv_data[train_size:]
-
 #splitting into dependant and independant variables
 X_train = train.loc[:, feature_cols]
 y_train = train["Band gap [eV]"]
 
 X_test = test.loc[:, feature_cols]
-y_test = np.array(test["Band gap [eV]"].values).astype(float)
+y_test = test["Band gap [eV]"]
 
 #creating regressor and fitting data
 params = {'alpha': 0.01, 'kernel': 'rbf'}
 reg = KernelRidge(**params)
 
 reg.fit(X_train, y_train)
+
 predicted = reg.predict(X_test)
+
 y = y_test
 
 print(r2_score(y, predicted))

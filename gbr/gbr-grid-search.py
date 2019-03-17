@@ -9,10 +9,9 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import mean_squared_error
 
 #read data
-csv_data = pd.read_csv("../data/processed.csv")
+test = pd.read_csv("../data/test.csv")
+train = pd.read_csv("../data/train.csv")
 
-#random shuffle
-csv_data.sample(frac=1)
 
 #specify feature column names
 feature_cols = [
@@ -29,12 +28,27 @@ feature_cols = [
 "Tolerance Factor",
 ]
 
-X = csv_data.loc[:, feature_cols]
-y = csv_data["Band gap [eV]"]
 
-# Split the dataset in two equal parts
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=0)
+feature_names = [
+"Radius A",
+"Radius B",
+"Formation energy",
+"Volume per atom",
+"Goldschmidt Tolerance Factor",
+"A Electronegativity",
+"B Electronegativity",
+"A Ionization Energy",
+"B Ionization Energy",
+"Octahedral Factor",
+"Tolerance Factor",
+]
+
+#splitting into dependant and independant variables
+X_train = train.loc[:, feature_cols]
+y_train = train["Band gap [eV]"]
+
+X_test = test.loc[:, feature_cols]
+y_test = test["Band gap [eV]"]
 
 tuned_parameters = [{'n_estimators': [250,500,750,1000], 'max_depth': [4,8,12,16], 'min_samples_split': [2,3,4],
           'learning_rate': [0.01,0.05,0.1,0.2], 'loss': ['ls']}]

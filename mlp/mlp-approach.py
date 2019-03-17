@@ -9,13 +9,10 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler  
 from sklearn.neural_network import MLPRegressor
 
-test_split_amount = 0.1 #20% of data is reserved for test
-
 #read data
-csv_data = pd.read_csv("../data/processed.csv")
+test = pd.read_csv("../data/test.csv")
+train = pd.read_csv("../data/train.csv")
 
-#random shuffle
-csv_data.sample(frac=1)
 
 #specify feature column names
 feature_cols = [
@@ -47,19 +44,12 @@ feature_names = [
 "Tolerance Factor",
 ]
 
-#test train split
-length = csv_data.shape[0]
-train_size = int(length*(1-test_split_amount))
-
-train = csv_data.loc[:train_size,:]
-test = csv_data.loc[train_size:,:]
-
 #splitting into dependant and independant variables
 X_train = train.loc[:, feature_cols]
 y_train = train["Band gap [eV]"]
 
 X_test = test.loc[:, feature_cols]
-y_test = np.array(test["Band gap [eV]"].values).astype(float)
+y_test = test["Band gap [eV]"]
 
 scaler = StandardScaler()  
 
@@ -70,7 +60,7 @@ X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)  
 
 #creating regressor and fitting data
-params = {'max_iter': 5000, 'solver': 'lbfgs', 'hidden_layer_sizes': {10}, 'activation': 'relu', 'learning_rate_init': 0.01}
+params = {'max_iter': 5000, 'activation': 'relu', 'solver': 'lbfgs', 'learning_rate_init': 0.1, 'hidden_layer_sizes': {10}}
 reg = MLPRegressor(**params)
 
 reg.fit(X_train, y_train)
