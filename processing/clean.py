@@ -27,6 +27,7 @@ csv_data.dropna(subset=["Band gap [eV]"],inplace=True)
 
 for feature in feature_cols:
     print(feature)
+    print(np.count_nonzero(np.isnan(csv_data[feature].astype('float32'))))
     csv_data[feature].fillna(csv_data[feature].astype('float32').mean(),inplace=True)
 
 test_split_amount = 0.2 #20% of data is reserved for test
