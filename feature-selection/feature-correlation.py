@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 
 #read data
-csv_data = pd.read_csv("data/processed.csv")
+csv_data = pd.read_csv("../data/train.csv")
 
 #specify feature column names
 #specify feature column names
@@ -18,10 +18,10 @@ feature_cols = [
 "Goldschmidt Tolerance Factor",
 "A Electronegativity",
 "B Electronegativity",
-"C Electronegativity",
 "A Ionization Energy",
 "B Ionization Energy",
-"C Ionization Energy",
+"Octahedral Factor",
+"Tolerance Factor",
 ]
 
 csv_data = csv_data.loc[:, feature_cols]
