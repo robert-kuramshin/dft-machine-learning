@@ -4,17 +4,28 @@ import numpy as np
 csv_data = pd.read_csv("../data/dft_pauling_electronegativity.csv")
 
 feature_cols = [
-"Radius A [ang]",
-"Radius B [ang]",
-"Formation energy [eV/atom]",
-"Volume per atom [A^3/atom]",
-"Goldschmidt Tolerance Factor",
-"A Electronegativity",
-"B Electronegativity",
-"A Ionization Energy",
-"B Ionization Energy",
-"Octahedral Factor",
-"Tolerance Factor",
+'Radius A [ang]',
+'Radius B [ang]',
+'Formation energy [eV/atom]',
+'Stability [eV/atom]',
+'Magnetic moment [mu_B]',
+'Volume per atom [A^3/atom]',
+'a [ang]',
+'b [ang]',
+'c [ang]',
+'alpha [deg]',
+'beta [deg]',
+'gamma [deg]',
+'Vacancy energy [eV/O atom]',
+'Octahedral Factor',
+'Tolerance Factor',
+'A Ionization Energy',
+'B Ionization Energy',
+'A Electronegativity',
+'B Electronegativity',
+'Goldschmidt Tolerance Factor'
+
+
 ]
 
 #do this first to make sure we don't set Nan bandgaps to zero
