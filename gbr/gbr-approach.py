@@ -28,11 +28,14 @@ feature_cols = [
 ]
 
 
+
+
+
 feature_names = [
-"Radius A",
-"Radius B",
-"Formation energy",
-"Volume per atom",
+"Radius A [ang]",
+"Radius B [ang]",
+"Formation energy [eV/atom]",
+"Volume per atom [A^3/atom]",
 "Goldschmidt Tolerance Factor",
 "A Electronegativity",
 "B Electronegativity",
