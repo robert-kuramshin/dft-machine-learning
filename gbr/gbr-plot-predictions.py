@@ -15,17 +15,26 @@ train = pd.read_csv("../data/train.csv")
 
 #specify feature column names
 feature_cols = [
-"Radius A [ang]",
-"Radius B [ang]",
-"Formation energy [eV/atom]",
-"Volume per atom [A^3/atom]",
-"Goldschmidt Tolerance Factor",
-"A Electronegativity",
-"B Electronegativity",
-"A Ionization Energy",
-"B Ionization Energy",
-"Octahedral Factor",
-"Tolerance Factor",
+'Radius A [ang]',
+'Radius B [ang]',
+'Formation energy [eV/atom]',
+'Stability [eV/atom]',
+'Magnetic moment [mu_B]',
+'Volume per atom [A^3/atom]',
+'a [ang]',
+'b [ang]',
+'c [ang]',
+'alpha [deg]',
+'beta [deg]',
+'gamma [deg]',
+'Vacancy energy [eV/O atom]',
+'Octahedral Factor',
+'Tolerance Factor',
+'A Ionization Energy',
+'B Ionization Energy',
+'A Electronegativity',
+'B Electronegativity',
+'Goldschmidt Tolerance Factor'
 ]
 
 
@@ -52,6 +61,7 @@ y_test = test["Band gap [eV]"]
 
 #creating regressor and fitting data
 params = {'loss': 'ls', 'max_depth': 4, 'learning_rate': 0.1, 'min_samples_split': 3, 'n_estimators': 500}
+
 reg = GradientBoostingRegressor(**params)
 
 reg.fit(X_train, y_train)

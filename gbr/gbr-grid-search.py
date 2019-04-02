@@ -15,32 +15,50 @@ train = pd.read_csv("../data/train.csv")
 
 #specify feature column names
 feature_cols = [
-"Radius A [ang]",
-"Radius B [ang]",
-"Formation energy [eV/atom]",
-"Volume per atom [A^3/atom]",
-"Goldschmidt Tolerance Factor",
-"A Electronegativity",
-"B Electronegativity",
-"A Ionization Energy",
-"B Ionization Energy",
-"Octahedral Factor",
-"Tolerance Factor",
+'Radius A [ang]',
+'Radius B [ang]',
+'Formation energy [eV/atom]',
+'Stability [eV/atom]',
+'Magnetic moment [mu_B]',
+'Volume per atom [A^3/atom]',
+'a [ang]',
+'b [ang]',
+'c [ang]',
+'alpha [deg]',
+'beta [deg]',
+'gamma [deg]',
+'Vacancy energy [eV/O atom]',
+'Octahedral Factor',
+'Tolerance Factor',
+'A Ionization Energy',
+'B Ionization Energy',
+'A Electronegativity',
+'B Electronegativity',
+'Goldschmidt Tolerance Factor'
 ]
 
 
 feature_names = [
-"Radius A",
-"Radius B",
-"Formation energy",
-"Volume per atom",
-"Goldschmidt Tolerance Factor",
-"A Electronegativity",
-"B Electronegativity",
-"A Ionization Energy",
-"B Ionization Energy",
-"Octahedral Factor",
-"Tolerance Factor",
+'Radius A [ang]',
+'Radius B [ang]',
+'Formation energy [eV/atom]',
+'Stability [eV/atom]',
+'Magnetic moment [mu_B]',
+'Volume per atom [A^3/atom]',
+'a [ang]',
+'b [ang]',
+'c [ang]',
+'alpha [deg]',
+'beta [deg]',
+'gamma [deg]',
+'Vacancy energy [eV/O atom]',
+'Octahedral Factor',
+'Tolerance Factor',
+'A Ionization Energy',
+'B Ionization Energy',
+'A Electronegativity',
+'B Electronegativity',
+'Goldschmidt Tolerance Factor'
 ]
 
 #splitting into dependant and independant variables
@@ -49,8 +67,7 @@ y_train = train["Band gap [eV]"]
 
 X_test = test.loc[:, feature_cols]
 y_test = test["Band gap [eV]"]
-
-tuned_parameters = [{'n_estimators': [250,500,750,1000], 'max_depth': [4,8,12,16], 'min_samples_split': [2,3,4],
+tuned_parameters = [{'n_estimators': [100,250,500], 'max_depth': [4,8,12,16],'min_samples_leaf':[2,3,4], 'min_samples_split': [0.25,0.5,0.75,2,3,4],
           'learning_rate': [0.01,0.05,0.1,0.2], 'loss': ['ls']}]
 
 scores = ['neg_mean_squared_error', 'r2']
