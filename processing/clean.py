@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-csv_data = pd.read_csv("../data/dft_pauling_electronegativity.csv")
+csv_data = pd.read_csv("../data/dft_group_period.csv")
 
 feature_cols = [
 'Radius A [ang]',
@@ -23,9 +23,14 @@ feature_cols = [
 'B Ionization Energy',
 'A Electronegativity',
 'B Electronegativity',
-'Goldschmidt Tolerance Factor'
-
-
+'Goldschmidt Tolerance Factor',
+"A rs",
+"A rp",
+"A rd",
+"B rs",
+"B rp",
+"B rd",
+"B EA"
 ]
 
 #do this first to make sure we don't set Nan bandgaps to zero
