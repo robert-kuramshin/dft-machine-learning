@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 from sklearn.metrics import r2_score
@@ -37,32 +39,78 @@ train = pd.read_csv("../data/train.csv")
 # 'Goldschmidt Tolerance Factor'
 # ]
 feature_cols = [
-"Radius A [ang]",
-"Radius B [ang]",
-"Formation energy [eV/atom]",
-"Volume per atom [A^3/atom]",
-"Goldschmidt Tolerance Factor",
-"A Electronegativity",
-"B Electronegativity",
-"A Ionization Energy",
-"B Ionization Energy",
-"Octahedral Factor",
-"Tolerance Factor",
+'Radius A [ang]',
+'Radius B [ang]',
+'Formation energy [eV/atom]',
+'Stability [eV/atom]',
+'Magnetic moment [mu_B]',
+'Volume per atom [A^3/atom]',
+'a [ang]',
+'b [ang]',
+'c [ang]',
+'alpha [deg]',
+'beta [deg]',
+'gamma [deg]',
+'Vacancy energy [eV/O atom]',
+'Octahedral Factor',
+'Tolerance Factor',
+'A Ionization Energy',
+'B Ionization Energy',
+'A Electronegativity',
+'B Electronegativity',
+"A rs",
+"A rp",
+"A rd",
+"B rs",
+"B rp",
+"B rd",
+"B EA",
+"B s total",
+"B p total",
+"B d total",
+"B f total",
+"A g",
+"A p",
+"B g",
+"B p"
 ]
 
 
 feature_names = [
-"Radius A [ang]",
-"Radius B [ang]",
-"Formation energy [eV/atom]",
-"Volume per atom [A^3/atom]",
-"Goldschmidt Tolerance Factor",
-"A Electronegativity",
-"B Electronegativity",
-"A Ionization Energy",
-"B Ionization Energy",
-"Octahedral Factor",
-"Tolerance Factor",
+'Radius A [ang]',
+'Radius B [ang]',
+'Formation energy [eV/atom]',
+'Stability [eV/atom]',
+'Magnetic moment [mu_B]',
+'Volume per atom [A^3/atom]',
+'a [ang]',
+'b [ang]',
+'c [ang]',
+'alpha [deg]',
+'beta [deg]',
+'gamma [deg]',
+'Vacancy energy [eV/O atom]',
+'Octahedral Factor',
+'Tolerance Factor',
+'A Ionization Energy',
+'B Ionization Energy',
+'A Electronegativity',
+'B Electronegativity',
+"A rs",
+"A rp",
+"A rd",
+"B rs",
+"B rp",
+"B rd",
+"B EA",
+"B s total",
+"B p total",
+"B d total",
+"B f total",
+"A g",
+"A p",
+"B g",
+"B p"
 ]
 
 
@@ -74,8 +122,11 @@ X_test = test.loc[:, feature_cols]
 y_test = test["Band gap [eV]"]
 
 #creating regressor and fitting data
-params = {'loss': 'ls', 'max_depth': 4, 'learning_rate': 0.1, 'min_samples_split': 3, 'n_estimators': 500}
-reg = GradientBoostingRegressor(**params)
+tuned_parameters = [{'n_estimators': [500], 'max_depth': [3,4,5],'min_samples_leaf':[3,4], 'min_samples_split': [3,4,5],
+          'learning_rate': [0.1], 'loss': ['ls']}]
+          
+reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,
+                scoring='neg_mean_squared_error')
 
 mse = []
 r2 = []
@@ -85,33 +136,46 @@ X_train = train.loc[:, feature_cols]
 X_test = test.loc[:, feature_cols]
 
 reg.fit(X_train, y_train)
+
+print("Best parameters set found on development set:")
+print()
+print(reg.best_params_)
+
 predicted = reg.predict(X_test)
 
 r2.append(r2_score(y_test, predicted))
 mse.append(mean_squared_error(y_test, predicted))
 feature.append("None")
-print(mse[-1])
 
-feature_importance = reg.feature_importances_
+feature_importance = reg.best_estimator_.feature_importances_
 print(feature_importance)
 worst_feature = feature_cols[feature_importance.argmin()]
+print(mse[-1])
 print("Eliminating: ",worst_feature)
 feature_cols.remove(worst_feature)
 feature.append(worst_feature)
+
 
 while (feature_cols):
     X_train = train.loc[:, feature_cols]
     X_test = test.loc[:, feature_cols]
 
+    reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,
+                    scoring='neg_mean_squared_error')
+
     reg.fit(X_train, y_train)
     predicted = reg.predict(X_test)
+
+    print("Best parameters set found on development set:")
+    print()
+    print(reg.best_params_)
 
     r2.append(r2_score(y_test, predicted))
     mse.append(mean_squared_error(y_test, predicted))
 
     print(mse[-1])
 
-    feature_importance = reg.feature_importances_
+    feature_importance = reg.best_estimator_.feature_importances_
     worst_feature = feature_cols[feature_importance.argmin()]
     print("Eliminating: ",worst_feature)
 
