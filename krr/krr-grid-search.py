@@ -16,6 +16,7 @@ train = pd.read_csv("../data/train.csv")
 
 
 #specify feature column names
+#specify feature column names
 feature_cols = [
 'Radius A [ang]',
 'Radius B [ang]',
@@ -36,7 +37,21 @@ feature_cols = [
 'B Ionization Energy',
 'A Electronegativity',
 'B Electronegativity',
-'Goldschmidt Tolerance Factor'
+"A rs",
+"A rp",
+"A rd",
+"B rs",
+"B rp",
+"B rd",
+"B EA",
+"B s total",
+"B p total",
+"B d total",
+"B f total",
+"A g",
+"A p",
+"B g",
+"B p"
 ]
 
 
