@@ -115,7 +115,7 @@ X_test = pd.DataFrame(X_test)
 
 ##################### 4.5 COMPOUND FEATURES ################
 #transforms
-transforms = [lambda x: np.power(x,1/2),lambda x: np.power(x,2),lambda x: np.power(x,3),lambda x: np.log(1+x),lambda x: np.exp(x)]
+transforms = [lambda x: np.power(x,1/2),lambda x: np.log(1+x),lambda x: np.exp(x)]
 n_cols = len(X_train.columns)
 for col in range(n_cols):
     for trans in transforms:
@@ -126,24 +126,35 @@ for col in range(n_cols):
         X_test[len(X_test.columns)] = 0 # add column
         X_test[len(X_test.columns)-1] = X_test.iloc[:,col]
         X_test.iloc[:,len(X_test.columns)-1].transform(trans)
-#x, x1/2, x2, x3, ln(1 + x), and ex 
+#x, x1/2, ln(1 + x), and ex 
+
 
 n_cols = len(X_train.columns)
+
+
 #compounding
+count = 0
+print("Part 1")
 for f_1 in range(n_cols):
     for f_2 in range(n_cols):
+        print(count," of ",n_cols * n_cols)
         if (not f_1 == f_2):
             X_train[len(X_train.columns)] = 0 # add column
             X_train[len(X_train.columns)-1] = X_train.iloc[:,f_1] * X_train.iloc[:,f_2]
             X_test[len(X_test.columns)] = 0 # add column
             X_test[len(X_test.columns)-1] = X_test.iloc[:,f_1] * X_test.iloc[:,f_2]
+            count+=1
 
 #compounding
+count = 0
+print("Part 2")
 for f_1 in range(n_cols):
     for f_2 in range(n_cols):
         for f_3 in range(n_cols):
+            print(count," of ",n_cols * n_cols * n_cols)
             if (not f_1 == f_2 and not f_2 == f_3 and not f_1 == f_3):
                 X_train[len(X_train.columns)] = 0 # add column
                 X_train[len(X_train.columns)-1] = X_train.iloc[:,f_1] * X_train.iloc[:,f_2] * X_train.iloc[:,f_3]
                 X_test[len(X_test.columns)] = 0 # add column
                 X_test[len(X_test.columns)-1] = X_test.iloc[:,f_1] * X_test.iloc[:,f_2] * X_test.iloc[:,f_3]
+                count+=1
