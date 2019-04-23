@@ -105,8 +105,8 @@ selector = VarianceThreshold(0.05)
 selector.fit_transform(X_train)
 
 print(X_train.shape)
-X_train = selector.fit_transform(X_train)
-X_test = selector.transform(X_test)
+# X_train = selector.fit_transform(X_train)
+# X_test = selector.transform(X_test)
 print(X_train.shape)
 
 # scaler = StandardScaler()  
@@ -161,7 +161,7 @@ print(X_train.shape)
 
 #creating regressor and fitting data
 #params = {'n_estimators': 500, 'loss': 'ls', 'learning_rate': 0.1, 'min_samples_leaf': 3, 'min_samples_split': 4, 'max_depth': 4}
-params = {'learning_rate':0.09,'loss':'lad','max_depth':9,'min_samples_leaf':4,"min_samples_split":6,"n_estimators":20000}
+params = {'learning_rate':0.075,'loss':'lad','max_depth':9,'min_samples_leaf':4,"min_samples_split":6,"n_estimators":20000}
 reg = GradientBoostingRegressor(**params)
 
 reg.fit(X_train, y_train)

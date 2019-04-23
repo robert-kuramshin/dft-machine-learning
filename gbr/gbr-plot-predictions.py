@@ -97,7 +97,7 @@ X_test = test.loc[:, feature_cols]
 y_test = test["Band gap [eV]"]
 
 #creating regressor and fitting data
-params = {'n_estimators': 500, 'loss': 'ls', 'learning_rate': 0.1, 'min_samples_leaf': 3, 'min_samples_split': 4, 'max_depth': 4}
+params = params = {'learning_rate':0.08,'loss':'lad','max_depth':9,'min_samples_leaf':4,"min_samples_split":6,"n_estimators":7000}
 
 reg = GradientBoostingRegressor(**params)
 
