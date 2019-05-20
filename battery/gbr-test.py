@@ -113,7 +113,31 @@ X_test = scaler.transform(X_test)
 
 #creating regressor and fitting data
 #params = {'n_estimators': 500, 'loss': 'ls', 'learning_rate': 0.1, 'min_samples_leaf': 3, 'min_samples_split': 4, 'max_depth': 4}
-params = {'learning_rate':0.075,'loss':'lad','max_depth':9,'min_samples_leaf':4,"min_samples_split":6,"n_estimators":1000}
+
+tuned_parameters = [{'n_estimators': [1500,5000],
+                     'max_depth': [1,2,3,4,5,6,7,8],
+                     'min_samples_leaf':[1,2,3,4,5,6,7],
+                    'min_samples_split': [0.5,0.75,1.0,2,3,4],
+                    'learning_rate': [0.05,0.075,0.1,0.125],
+                'loss': ['ls','lad','huber']}]
+
+scores = ['neg_mean_squared_error']
+
+for score in scores:
+    print("# Tuning hyper-parameters for %s" % score)
+    print()
+
+    clf = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=3, n_jobs=4,
+                       scoring='%s' % score)
+    clf.fit(X_train, y_train)
+
+    print("Best parameters set found on development set:")
+    print()
+    print(clf.best_params_)
+    print()
+
+
+params = clf.best_params_
 reg = GradientBoostingRegressor(**params)
 
 reg.fit(X_train, y_train)
