@@ -24,11 +24,8 @@ feature_cols = [
 'LUMO (eV)',
 'EA (eV)',
 '# C',
-'# B',
-'#O',
 'Band Gap',
 '#Li',
-'# H',
 'No. of Aromatic Rings',
 ]
 
@@ -38,11 +35,8 @@ feature_names = [
 'LUMO (eV)',
 'EA (eV)',
 '# C',
-'# B',
-'#O',
 'Band Gap',
 '#Li',
-'# H',
 'No. of Aromatic Rings',
 ]
 
@@ -114,12 +108,12 @@ X_test = scaler.transform(X_test)
 #creating regressor and fitting data
 #params = {'n_estimators': 500, 'loss': 'ls', 'learning_rate': 0.1, 'min_samples_leaf': 3, 'min_samples_split': 4, 'max_depth': 4}
 
-tuned_parameters = [{'n_estimators': [1500,5000],
-                     'max_depth': [1,2,3,4,5,6,7,8],
-                     'min_samples_leaf':[1,2,3,4,5,6,7],
-                    'min_samples_split': [0.5,0.75,1.0,2,3,4],
-                    'learning_rate': [0.05,0.075,0.1,0.125],
-                'loss': ['ls','lad','huber']}]
+tuned_parameters = [{'n_estimators': [100,125],
+                     'max_depth': [3,4,5,6],
+                     'min_samples_leaf':[2,3,4],
+                    'min_samples_split': [0.75,1.0],
+                    'learning_rate': [0.075,0.1],
+                'loss': ['ls']}]
 
 scores = ['neg_mean_squared_error']
 
@@ -141,9 +135,15 @@ params = clf.best_params_
 reg = GradientBoostingRegressor(**params)
 
 reg.fit(X_train, y_train)
-mse = mean_squared_error(y_test, reg.predict(X_test))
+
+y_pred = reg.predict(X_test)
+mse = mean_squared_error(y_test, y_pred)
 print("MSE: %.4f" % mse)
-print(r2_score(y_test, reg.predict(X_test)))
+print(r2_score(y_test, y_pred))
+
+
+
+
 
 # #############################################################################
 # Plot training deviance
@@ -160,7 +160,7 @@ output["Predicted"] = pd.DataFrame(y_pred)
 output.to_csv("results.csv")
 
 plt.figure(figsize=(12, 6))
-plt.subplot(1, 2, 1)
+
 plt.title('Deviance')
 plt.plot(np.arange(params['n_estimators']) + 1, reg.train_score_, 'b-',
          label='Training Set Deviance')
@@ -170,17 +170,13 @@ plt.legend(loc='upper right')
 plt.xlabel('Boosting Iterations')
 plt.ylabel('Deviance')
 
-# ############################################################################
-# Plot feature importance
-feature_importance = reg.feature_importances_
-# make importances relative to max importance
-feature_importance = 100.0 * (feature_importance / feature_importance.max())
-sorted_idx = np.argsort(feature_importance)
-pos = np.arange(sorted_idx.shape[0]) + .5
-plt.subplot(1, 2, 2)
-plt.barh(pos, feature_importance[sorted_idx], align='center')
-feature_names = [feature_names[i] for i in sorted_idx]
-plt.yticks(pos, feature_names)
-plt.xlabel('Relative Importance')
-plt.title('Variable Importance')
+
 plt.show()
+
+
+
+d = pd.DataFrame(y_train)
+
+d["predicted"] = reg.predict(X_train)
+
+d.to_csv("test.csv")
