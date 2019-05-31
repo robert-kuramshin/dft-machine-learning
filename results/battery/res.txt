@@ -1,0 +1,37 @@
+﻿just gbr:
+MSE: 0.1115
+R2: 0.9710
+
+just krr:
+MSE: 0.2002
+R2: 0.9478
+
+--------------------------------- RFE ---------------------------------
+
+RFE Selected Feautres (in order of decreasing assesed importance): 
+ EA (eV)
+ #Li
+ HOMO (eV)
+ # C
+ Band Gap
+ No. of Aromatic Rings
+ LUMO (eV)
+ # H
+
+RFE Removed Feautres (in order of decreasing assesed importance): 
+ #H
+ #O
+
+gbr + rfe:
+mse: 0.0459
+r2: 0.9797
+
+krr + rfe:
+mse: 0.1444
+r2: 0.9623
+
+look at other feature elimination methods
+try neural designer esque feature selection
+compare # B as only feature against ea
+add percentage error and linear correlation (throw in slide) 
+
