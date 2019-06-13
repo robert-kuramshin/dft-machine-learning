@@ -25,7 +25,7 @@ new_features = []
 count = 0
 for coef in las.best_estimator_.coef_:
     if(not coef == 0.0):
-        new_features.append(feature_cols[count])
+        new_features.append(X_train.columns[count])
     count+=1
 
 print (new_features)
