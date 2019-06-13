@@ -70,12 +70,12 @@ for col in range(n_cols):
         name = transforms_format[trans].format(X_train.columns[col])
         X_train[name] = 0 # add column
         X_train[name] = X_train.iloc[:,col]
-        X_train.iloc[:,len(X_train.columns)-1].transform(transforms[trans])
+        X_train[name] = X_train[name].transform(transforms[trans])
 
         name = transforms_format[trans].format(X_test.columns[col])
         X_test[name] = 0 # add column
         X_test[name] = X_test.iloc[:,col]
-        X_test.iloc[:,len(X_test.columns)-1].transform(transforms[trans])
+        X_test[name] = X_test[name].transform(transforms[trans])
 
 X_test.to_csv("res/X_test_trans.csv")
 X_train.to_csv("res/X_train_trans.csv")
