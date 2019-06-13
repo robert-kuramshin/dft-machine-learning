@@ -42,6 +42,14 @@ y_train = train['RP (V) - DFT']
 X_test = test.loc[:, feature_cols]
 y_test = test['RP (V) - DFT']
 
+df = pd.DataFrame()
+df["RP (V) - DFT"] = y_test
+y_test = df
+
+df = pd.DataFrame()
+df["RP (V) - DFT"] = y_train
+y_train = df
+
 #normalizing 
 scaler = StandardScaler()  
 scaler.fit(X_train)  
