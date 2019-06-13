@@ -29,3 +29,9 @@ for coef in las.best_estimator_.coef_:
     count+=1
 
 print (new_features)
+
+X_train = X_train[new_features]
+X_test = X_test[new_features]
+
+X_test.to_csv("res/X_test_lasso.csv")
+X_train.to_csv("res/X_train_lasso.csv")
