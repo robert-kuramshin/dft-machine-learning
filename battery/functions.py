@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 
 from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MaxAbsScaler
 
 test = pd.read_csv("../data/battery/test.csv")
 train = pd.read_csv("../data/battery/train.csv")
@@ -56,13 +57,18 @@ scaler.fit(X_train)
 X_train = scaler.transform(X_train)  
 X_test = scaler.transform(X_test)  
 
+scaler = MaxAbsScaler()  
+scaler.fit(X_train)  
+X_train = scaler.transform(X_train)  
+X_test = scaler.transform(X_test)  
+
 #numpy array tp pandas dataframe
 X_train = pd.DataFrame(X_train, columns=feature_names)
 X_test = pd.DataFrame(X_test, columns=feature_names)
 
 #transforming
-transforms = [lambda x: np.power(x,2),lambda x: np.power(x,1/2),lambda x: np.log(1+x),lambda x: np.exp(x)]
-transforms_format = ["({})^(2)","({})^(1/2)","log(1+({}))","n^({})"]
+transforms = [lambda x: np.power(x,2),lambda x: np.power(1+x,1/2),lambda x: np.log(2+x),lambda x: np.exp(x)]
+transforms_format = ["({})^(2)","(1 + {})^(1/2)","log(2+({}))","n^({})"]
 n_cols = len(X_train.columns)
 n_trans = len(transforms)
 for col in range(n_cols):
@@ -76,6 +82,11 @@ for col in range(n_cols):
         X_test[name] = 0 # add column
         X_test[name] = X_test.iloc[:,col]
         X_test[name] = X_test[name].transform(transforms[trans])
+
+#since maxabs scaler was trained only on X_train, it's values may exceed [-1,1]
+#hence we need to fill NA values
+for feature in X_test.columns:
+    X_test[feature].fillna(X_test[feature].astype('float32').mean(),inplace=True)
 
 X_test.to_csv("res/X_test_trans.csv")
 X_train.to_csv("res/X_train_trans.csv")
