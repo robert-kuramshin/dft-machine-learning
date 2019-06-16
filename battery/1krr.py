@@ -28,7 +28,6 @@ feature_cols = [
 "# Li",
 "# H",
 "No. of Aromatic Rings",
-"RP (V) - DFT",
 ]
 
 feature_names = [
@@ -66,10 +65,12 @@ clf.fit(X_train, y_train)
 
 print(clf.best_params_)
 
-y_pred = y_test, clf.predict(X_test)
+y_pred = clf.predict(X_test)
 print(mean_squared_error(y_test, y_pred))
 print(r2_score(y_test, y_pred))
 
+
+np.savetxt("res/krr_raw.csv", y_pred, delimiter=",")
 
 
 

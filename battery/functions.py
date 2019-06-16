@@ -19,7 +19,6 @@ feature_cols = [
 "# Li",
 "# H",
 "No. of Aromatic Rings",
-"RP (V) - DFT",
 ]
 
 feature_names = [
@@ -33,7 +32,6 @@ feature_names = [
 "h",
 "i",
 "j",
-"k",
 ]
 
 #splitting into dependant and independant variables
@@ -68,7 +66,7 @@ X_test = pd.DataFrame(X_test, columns=feature_names)
 
 #transforming
 transforms = [lambda x: np.power(x,2),lambda x: np.power(1+x,1/2),lambda x: np.log(2+x),lambda x: np.exp(x)]
-transforms_format = ["({})^(2)","(1 + {})^(1/2)","log(2+({}))","n^({})"]
+transforms_format = ["({})^(2)","(1 + {})^(1/2)","log(2+({}))","e^({})"]
 n_cols = len(X_train.columns)
 n_trans = len(transforms)
 for col in range(n_cols):
