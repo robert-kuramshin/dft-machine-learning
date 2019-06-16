@@ -28,3 +28,5 @@ print(clf.best_params_)
 y_pred = clf.predict(X_test)
 print(mean_squared_error(y_test, y_pred))
 print(r2_score(y_test, y_pred))
+
+np.savetxt("res/krr_compound_res.csv", y_pred, delimiter=",")
