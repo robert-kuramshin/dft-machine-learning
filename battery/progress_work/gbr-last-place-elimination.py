@@ -12,22 +12,22 @@ from sklearn.metrics import r2_score
 
 
 #read data
-test = pd.read_csv("../data/battery/test.csv")
-train = pd.read_csv("../data/battery/train.csv")
+test = pd.read_csv("../../data/battery/test.csv")
+train = pd.read_csv("../../data/battery/train.csv")
 
 
 #specify feature column names
 feature_cols = [
-'# C',
-'#O',
-'# H',
-'No. of Aromatic Rings',
-'Band Gap',
-'# B',
-'HOMO (eV)',
-'LUMO (eV)',
-'#Li',
-'EA (eV)',
+"HOMO (eV)",
+"LUMO (eV)",
+"EA (eV)",
+"# C",
+"# B",
+"# O",
+"HOMO-LUMO gap",
+"# Li",
+"# H",
+"No. of Aromatic Rings",
 ]
 
 
@@ -45,11 +45,11 @@ feature_names = [
 ]
 
 #splitting into dependant and independant variables
-X_train = train.loc[:, feature_cols]
-y_train = train['RP (V) - DFT']
+X_train = train.loc[40:, feature_cols]
+y_train = train.loc[40:, ['RP (V) - DFT']]
 
-X_test = test.loc[:, feature_cols]
-y_test = test['RP (V) - DFT']
+X_test = train.loc[:40, feature_cols]
+y_test = train.loc[:40, ['RP (V) - DFT']]
 
 
 #creating regressor and fitting data
@@ -63,10 +63,10 @@ mse = []
 r2 = []
 feature = []
 
-X_train = train.loc[:, feature_cols]
-X_test = test.loc[:, feature_cols]
+# X_train = train.loc[:, feature_cols]
+# X_test = test.loc[:, feature_cols]
 
-reg.fit(X_train, y_train)
+reg.fit(X_train, y_train.values.ravel())
 
 print("Best parameters set found on development set:")
 print()
@@ -84,14 +84,13 @@ feature_cols.remove(feature_cols[0])
 
 
 while (feature_cols):
-
-    X_train = train.loc[:, feature_cols]
-    X_test = test.loc[:, feature_cols]
+    X_train = X_train.loc[:, feature_cols]
+    X_test = X_test.loc[:, feature_cols]
 
     reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,
                     scoring='neg_mean_squared_error')
 
-    reg.fit(X_train, y_train)
+    reg.fit(X_train, y_train.values.ravel())
     predicted = reg.predict(X_test)
 
     print("Best parameters set found on development set:")

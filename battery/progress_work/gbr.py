@@ -9,30 +9,33 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import r2_score
 
 #read data
-test = pd.read_csv("../data/battery/test.csv")
-train = pd.read_csv("../data/battery/train.csv")
+test = pd.read_csv("../../data/battery/test.csv")
+train = pd.read_csv("../../data/battery/train.csv")
 
 
 #specify feature column names
 feature_cols = [
-'# C',
-'# H',
-'No. of Aromatic Rings',
-'Band Gap',
-'# B',
-'LUMO (eV)',
-'EA (eV)',
+"LUMO (eV)",
+"EA (eV)",
+"# C",
+"# B",
+"# O",
+"HOMO-LUMO gap",
+"# Li",
+"# H",
+"No. of Aromatic Rings",
 ]
 
-
 feature_names = [
-'# C',
-'# H',
-'No. of Aromatic Rings',
-'Band Gap',
-'# B',
-'LUMO (eV)',
-'EA (eV)',
+"LUMO (eV)",
+"EA (eV)",
+"# C",
+"# B",
+"# O",
+"HOMO-LUMO gap",
+"# Li",
+"# H",
+"No. of Aromatic Rings",
 ]
 
 #splitting into dependant and independant variables
