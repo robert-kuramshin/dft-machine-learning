@@ -100,7 +100,7 @@ in_y_test = pd.read_csv("res/y_test.csv",index_col=0)
 
 feature_cols = in_x_train.columns.values
 
-validation_ratio = 0.5
+validation_ratio = 0.7
 dataset_size = len(in_x_train)
 
 X_train = in_x_train.loc[validation_ratio*dataset_size:]
