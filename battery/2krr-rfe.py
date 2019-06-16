@@ -145,4 +145,9 @@ f_elim["mse"] = mse
 f_elim["r2"] = r2
 f_elim.to_csv("res/feature_elim_krr_compound.csv")
 
+rfe_features = feature[np.argmin(mse)+1:]
+in_x_train = in_x_train[rfe_features]
+in_x_test = in_x_test[rfe_features]
 
+in_x_train.to_csv("res/X_train_rfe.csv")
+in_x_test.to_csv("res/X_test_rfe.csv")

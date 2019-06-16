@@ -13,8 +13,8 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 
 #read data
-X_train = pd.read_csv("res/X_train_corr.csv",index_col=0)
-X_test = pd.read_csv("res/X_test_corr.csv",index_col=0)
+X_train = pd.read_csv("res/X_train_rfe.csv",index_col=0)
+X_test = pd.read_csv("res/X_test_rfe.csv",index_col=0)
 y_train = pd.read_csv("res/y_train.csv",index_col=0)
 y_test = pd.read_csv("res/y_test.csv",index_col=0)
 
