@@ -134,13 +134,12 @@ while (feature_cols):
     print(mse[-1])
     print(feature[-1])
 
-    if(len(feature_cols)>1):
-        feature.append(feature_cols[0])
+    feature.append(feature_cols[0])
 
     feature_cols.remove(feature_cols[0])
 
 f_elim = pd.DataFrame()
-f_elim["feature"] = feature
+f_elim["feature"] = feature[:-1]
 f_elim["mse"] = mse
 f_elim["r2"] = r2
 f_elim.to_csv("res/feature_elim_krr_compound.csv")
