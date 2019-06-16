@@ -10,19 +10,88 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 
-X_train = pd.read_csv("res/X_train_corr.csv",index_col=0)
-X_test = pd.read_csv("res/X_test_corr.csv",index_col=0)
-y_train = pd.read_csv("res/y_train.csv",index_col=0)
-y_test = pd.read_csv("res/y_test.csv",index_col=0)
+in_x_train = pd.read_csv("res/X_train_corr.csv",index_col=0)
+in_x_test = pd.read_csv("res/X_test_corr.csv",index_col=0)
+in_y_train = pd.read_csv("res/y_train.csv",index_col=0)
+in_y_test = pd.read_csv("res/y_test.csv",index_col=0)
+
+feature_cols = in_x_train.columns.values
 
 validation_ratio = 0.2
-dataset_size = len(X_train)
+dataset_size = len(in_x_train)
 
-X_train = train.loc[validation_ratio*dataset_size:, feature_cols]
-y_train = train.loc[validation_ratio*dataset_size:, ['RP (V) - DFT']]
+X_train = in_x_train.loc[validation_ratio*dataset_size:]
+y_train = in_y_train.loc[validation_ratio*dataset_size:]
 
-X_val = train.loc[:validation_ratio*dataset_size, feature_cols]
-y_val = train.loc[:validation_ratio*dataset_size, ['RP (V) - DFT']]
+X_val = in_x_train.loc[:validation_ratio*dataset_size]
+y_val = in_y_train.loc[:validation_ratio*dataset_size]
+
+params = [{'kernel':["linear","rbf"],'alpha': [0.001,0.01,0.1,0.5,1.0,1.5]}]
+
+clf = GridSearchCV(KernelRidge(), params, cv=5)
+clf.fit(X_train, y_train)
+
+y_true, y_pred = y_val, clf.predict(X_val)
+
+print("MSE with all features")
+
+all_feature_mse = mean_squared_error(y_true, y_pred)
+print(all_feature_mse)
+
+print("Starting feature relevance analysis")
+
+mse_arr = []
+feature_arr = []
+
+for feature in feature_cols:
+    X_train_copy = X_train.loc[:, feature_cols].copy()
+    y_train_copy = y_train.copy()
+    X_test_copy = X_val.loc[:, feature_cols].copy()
+    y_test_copy = y_val.copy()
+
+    X_train_cut = X_train_copy.drop(columns=feature)
+    X_test_cut = X_test_copy.drop(columns=feature)
+
+    scaler = StandardScaler() 
+    scaler.fit(X_train_cut)  
+    X_train_cut = scaler.transform(X_train_cut)  
+    X_test_cut = scaler.transform(X_test_cut)  
+
+    
+    clf = GridSearchCV(KernelRidge(), params, cv=5)
+    clf.fit(X_train_cut, y_train_copy)
+
+    y_true, y_pred = y_test_copy, clf.predict(X_test_cut)
+
+    mse = mean_squared_error(y_true, y_pred)
+    print("----------------------------------")
+    print(feature)
+    print(mse)
+    mse_arr.append(mse)
+    feature_arr.append(feature)
+
+feature_importance = mse_arr
+# make importances relative to max importance
+feature_importance = 100.0 * (feature_importance / max(feature_importance))
+sorted_idx = np.argsort(feature_importance)
+pos = np.arange(sorted_idx.shape[0]) + .5
+feature_arr = [feature_arr[i] for i in sorted_idx]
+
+feature_cols = feature_arr
+feature_importance.sort()
+
+f_imp = pd.DataFrame()
+f_imp["feature"] = feature_cols
+f_imp["importance"] = feature_importance
+print("----------------------------------")
+print("----------------------------------")
+print("----------------------------------")
+print(f_imp)
+print("----------------------------------")
+print("----------------------------------")
+print("----------------------------------")
+
+f_imp.to_csv("res/feature_importance_krr_compound.csv")
 
 #creating regressor and fitting data
 tuned_parameters = [{'kernel':["linear","rbf"],'alpha': [0.001,0.01,0.1,0.5,1.0]}]
@@ -43,7 +112,7 @@ mse.append(mean_squared_error(y_val, predicted))
 feature.append("None")
 print("----------------------------------")
 print(mse[-1])
-print(feature_cols[0])
+print("None")
 feature.append(feature_cols[0])
 feature_cols.remove(feature_cols[0])
 
@@ -60,10 +129,20 @@ while (feature_cols):
 
     r2.append(r2_score(y_val, predicted))
     mse.append(mean_squared_error(y_val, predicted))
+
     print("----------------------------------")
     print(mse[-1])
-    print(feature_cols[0])
+    print(feature[-1])
+
     if(len(feature_cols)>1):
         feature.append(feature_cols[0])
+
     feature_cols.remove(feature_cols[0])
+
+f_elim = pd.DataFrame()
+f_elim["feature"] = feature
+f_elim["mse"] = mse
+f_elim["r2"] = r2
+f_elim.to_csv("res/feature_elim_krr_compound.csv")
+
 
