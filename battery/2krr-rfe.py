@@ -26,7 +26,8 @@ y_train = in_y_train.loc[validation_ratio*dataset_size:]
 X_val = in_x_train.loc[:validation_ratio*dataset_size]
 y_val = in_y_train.loc[:validation_ratio*dataset_size]
 
-params = [{'kernel':["linear","rbf"],'alpha': [0.001,0.01,0.1,0.5,1.0,1.5]}]
+#params = [{'kernel':["linear","rbf"],'alpha': np.logspace(-3,0,100)}]
+params = [{'kernel':["linear","rbf"],'alpha': [0.01]}]
 
 clf = GridSearchCV(KernelRidge(), params, cv=5)
 clf.fit(X_train, y_train)
@@ -94,7 +95,9 @@ print("----------------------------------")
 f_imp.to_csv("res/feature_importance_krr_compound.csv")
 
 #creating regressor and fitting data
-tuned_parameters = [{'kernel':["linear","rbf"],'alpha': [0.001,0.01,0.1,0.5,1.0]}]
+#tuned_parameters = [{'kernel':["linear","rbf"],'alpha': [0.001,0.01,0.1,0.5,1.0]}]
+tuned_parameters = [{'kernel':["linear","rbf"],'alpha': [0.01]}]
+
           
 reg = GridSearchCV(KernelRidge(), tuned_parameters, cv=5,
                 scoring='neg_mean_squared_error')

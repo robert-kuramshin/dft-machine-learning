@@ -18,7 +18,8 @@ X_test = pd.read_csv("res/X_test_rfe.csv",index_col=0)
 y_train = pd.read_csv("res/y_train.csv",index_col=0)
 y_test = pd.read_csv("res/y_test.csv",index_col=0)
 
-tuned_parameters = [{'kernel':["linear","rbf"],'alpha': np.linspace(0,15,16)}]
+#tuned_parameters = [{'kernel':["linear","rbf"],'alpha': np.logspace(-3,0,100)}]
+tuned_parameters = [{'kernel':["linear","rbf"],'alpha': [0.01]}]
 
 clf = GridSearchCV(KernelRidge(), tuned_parameters, cv=5)
 clf.fit(X_train, y_train)

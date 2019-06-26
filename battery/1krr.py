@@ -58,7 +58,8 @@ scaler.fit(X_train)
 X_train = scaler.transform(X_train)  
 X_test = scaler.transform(X_test)  
 
-tuned_parameters = [{'kernel':["linear","rbf"],'alpha': np.linspace(0,15,16)}]
+#tuned_parameters = [{'kernel':["linear","rbf"],'alpha': np.logspace(-3,0,100)}]
+tuned_parameters = [{'kernel':["linear","rbf"],'alpha': [0.01]}]
 
 clf = GridSearchCV(KernelRidge(), tuned_parameters, cv=5)
 clf.fit(X_train, y_train)
