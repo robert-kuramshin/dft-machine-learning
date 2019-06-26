@@ -1,0 +1,23 @@
+
+KRR:
+
+Raw Data:
+MSE 0.08692920423454875
+R2 0.9741771859013452
+
+Raw Data -> pearson -> rfe:
+0.08552498975046259
+0.974594315793382
+
+Raw Data -> functions -> compounding -> lasso -> pearson -> rfe:
+0.016714836023917688
+0.9950347629759668
+
+GBR:
+
+Raw Data:
+MSE 0.50688
+R2 0.849427
+Raw Data -> functions -> compounding -> lasso -> pearson:
+
+
