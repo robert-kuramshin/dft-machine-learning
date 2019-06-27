@@ -26,14 +26,10 @@ y_train = in_y_train.loc[validation_ratio*dataset_size:]
 X_val = in_x_train.loc[:validation_ratio*dataset_size]
 y_val = in_y_train.loc[:validation_ratio*dataset_size]
 
-params = [{'n_estimators': [100,150,200],
-                     'max_depth': [1,2,3,4,5,6,7,8],
-                     'min_samples_leaf':[1,2,3,4,5],
-                    'min_samples_split': [0.5,0.75,1.0,2,3,4,5],
-                    'learning_rate': [0.05,0.075,0.1,0.125,0.15,0.2],
-               "loss":['ls','lad','huber']}]
+params = [{'n_estimators': [200], 'max_depth': [3,4,5],'min_samples_leaf':[3,4], 'min_samples_split': [3,4,5],
+          'learning_rate': [0.05,0.1], 'loss': ['ls']}]
 
-clf = GridSearchCV(GradientBoostingRegressor(), params, cv=5)
+clf = GridSearchCV(GradientBoostingRegressor(), params, cv=5, n_jobs=7)
 clf.fit(X_train, y_train)
 
 y_true, y_pred = y_val, clf.predict(X_val)
@@ -63,7 +59,7 @@ for feature in feature_cols:
     X_test_cut = scaler.transform(X_test_cut)  
 
     
-    clf = GridSearchCV(GradientBoostingRegressor(), params, cv=5)
+    clf = GridSearchCV(GradientBoostingRegressor(), params, cv=5, n_jobs=7)
     clf.fit(X_train_cut, y_train_copy)
 
     y_true, y_pred = y_test_copy, clf.predict(X_test_cut)
@@ -99,15 +95,11 @@ print("----------------------------------")
 f_imp.to_csv("res/feature_importance_gbr_compound.csv")
 
 #creating regressor and fitting data
-tuned_parameters = [{'n_estimators': [100,150,200],
-                     'max_depth': [1,2,3,4,5,6,7,8],
-                     'min_samples_leaf':[1,2,3,4,5],
-                    'min_samples_split': [0.5,0.75,1.0,2,3,4,5],
-                    'learning_rate': [0.05,0.075,0.1,0.125,0.15,0.2],
-               "loss":['ls','lad','huber']}]
+tuned_parameters = [{'n_estimators': [200], 'max_depth': [3,4,5],'min_samples_leaf':[3,4], 'min_samples_split': [3,4,5],
+          'learning_rate': [0.05,0.1], 'loss': ['ls']}]
 
           
-reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,
+reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5, n_jobs=7,
                 scoring='neg_mean_squared_error')
 
 mse = []
@@ -132,7 +124,7 @@ while (feature_cols):
     X_train = X_train.loc[:, feature_cols]
     X_val = X_val.loc[:, feature_cols]
 
-    reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,
+    reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,n_jobs=7,
                     scoring='neg_mean_squared_error')
 
     reg.fit(X_train, y_train.values.ravel())
