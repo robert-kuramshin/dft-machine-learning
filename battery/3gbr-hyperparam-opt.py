@@ -18,7 +18,7 @@ X_test = pd.read_csv("res/X_test_corr.csv",index_col=0)
 y_train = pd.read_csv("res/y_train.csv",index_col=0)
 y_test = pd.read_csv("res/y_test.csv",index_col=0)
 
-tuned_parameters = [{'n_estimators': [100,150,200],
+tuned_parameters = [{'n_estimators': [100,200,500],
                      'max_depth': [1,2,3,4,5,6,7,8],
                      'min_samples_leaf':[1,2,3,4,5],
                     'min_samples_split': [0.5,0.75,1.0,2,3,4,5],
