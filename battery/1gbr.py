@@ -57,7 +57,7 @@ scaler.fit(X_train)
 X_train = scaler.transform(X_train)  
 X_test = scaler.transform(X_test)  
 
-tuned_parameters = [{'n_estimators': [100,150,200],
+tuned_parameters = [{'n_estimators': [100,200,500],
                      'max_depth': [1,2,3,4,5,6,7,8],
                      'min_samples_leaf':[1,2,3,4,5],
                     'min_samples_split': [0.5,0.75,1.0,2,3,4,5],
