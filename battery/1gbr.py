@@ -30,7 +30,7 @@ feature_cols = [
 "No. of Aromatic Rings",
 ]
 
-feature_names = [
+feature_names = [ 
 "HOMO (eV)",
 "LUMO (eV)",
 "EA (eV)",
@@ -41,7 +41,6 @@ feature_names = [
 "# Li",
 "# H",
 "No. of Aromatic Rings",
-"RP (V) - DFT",
 ]
 
 #splitting into dependant and independant variables
