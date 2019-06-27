@@ -20,7 +20,8 @@ MSE 0.50688
 R2 0.849427
 
 Raw Data -> pearson -> rfe:
-
+0.08025906424844573
+0.9761585888877157
 
 Raw Data -> functions -> compounding -> lasso -> pearson -> rfe:
 0.07334092266610212
