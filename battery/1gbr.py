@@ -60,7 +60,7 @@ X_test = scaler.transform(X_test)
 tuned_parameters = [{'n_estimators': [100,200,500],
                      'max_depth': [1,2,3,4,5,6,7,8],
                      'min_samples_leaf':[1,2,3,4,5],
-                    'min_samples_split': [0.5,0.75,1.0,2,3,4,5],
+                    'min_samples_split': [0.5,1.0,2,3,4,5,6,7,8,9,10,11,12],
                     'learning_rate': [0.05,0.075,0.1,0.125,0.15,0.2],
                "loss":['ls','lad','huber']}]
 
