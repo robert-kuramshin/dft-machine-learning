@@ -13,6 +13,10 @@ Raw Data -> functions -> compounding -> lasso -> pearson -> rfe:
 0.016714836023917688
 0.9950347629759668
 
+Raw Data -> functions -> compounding -> lasso -> pearson -> rfe: (more aggresive corr thr of 0.82)
+0.0388159108887557
+0.9884695130965904
+
 GBR:
 
 Raw Data:
