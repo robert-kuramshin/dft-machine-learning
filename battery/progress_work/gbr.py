@@ -14,7 +14,12 @@ train = pd.read_csv("../../data/battery/train.csv")
 
 
 #specify feature column names
+test = pd.read_csv("../../data/battery/test.csv")
+train = pd.read_csv("../../data/battery/train.csv")
+
+#specify feature column names
 feature_cols = [
+"HOMO (eV)",
 "LUMO (eV)",
 "EA (eV)",
 "# C",
@@ -26,7 +31,9 @@ feature_cols = [
 "No. of Aromatic Rings",
 ]
 
+
 feature_names = [
+"HOMO (eV)",
 "LUMO (eV)",
 "EA (eV)",
 "# C",
