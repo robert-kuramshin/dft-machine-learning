@@ -20,8 +20,8 @@ Raw Data -> functions -> compounding -> lasso -> pearson -> rfe: (more aggresive
 GBR:
 
 Raw Data:
-MSE 0.50688
-R2 0.849427
+0.28300280096667
+0.9159324097912713
 
 Raw Data -> pearson -> rfe:
 0.08025906424844573
