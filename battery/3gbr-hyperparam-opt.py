@@ -25,7 +25,7 @@ tuned_parameters = [{'n_estimators': [100,200,500],
                     'learning_rate': [0.05,0.075,0.1,0.125,0.15,0.2],
                "loss":['ls','lad','huber']}]
 
-clf = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,n_jobs=7)
+clf = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,n_jobs=3)
 clf.fit(X_train, y_train)
 
 print(clf.best_params_)
@@ -35,3 +35,8 @@ print(mean_squared_error(y_test, y_pred))
 print(r2_score(y_test, y_pred))
 
 np.savetxt("res/gbr_compound_res.csv", y_pred, delimiter=",")
+
+res_test = pd.DataFrame(index=X_train.index )
+res_test["y"] = y_train
+res_test["pred(y)"] = clf.predict(X_train)
+res_test.to_csv("res/gbr_compound_res_train.csv")

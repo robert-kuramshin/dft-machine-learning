@@ -31,3 +31,8 @@ print(mean_squared_error(y_test, y_pred))
 print(r2_score(y_test, y_pred))
 
 np.savetxt("res/krr_compound_res.csv", y_pred, delimiter=",")
+
+res_test = pd.DataFrame(index=y_train.index )
+res_test["y"] = y_train
+res_test["pred(y)"] = clf.predict(X_train)
+res_test.to_csv("res/krr_compound_res_train.csv")
