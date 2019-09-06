@@ -12,6 +12,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 
+import pickle
+
 #read data
 X_train = pd.read_csv("res/X_train_rfe.csv",index_col=0)
 X_test = pd.read_csv("res/X_test_rfe.csv",index_col=0)
@@ -36,3 +38,5 @@ res_test = pd.DataFrame(index=y_train.index )
 res_test["y"] = y_train
 res_test["pred(y)"] = clf.predict(X_train)
 res_test.to_csv("res/krr_compound_res_train.csv")
+
+pickle.dump(clf, open("models/3krr.sav", 'wb'))

@@ -12,6 +12,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 
+import pickle
+
 #read data
 X_train = pd.read_csv("res/X_train_corr.csv",index_col=0)
 X_test = pd.read_csv("res/X_test_corr.csv",index_col=0)
@@ -25,7 +27,7 @@ tuned_parameters = [{'n_estimators': [100,200,500],
                     'learning_rate': [0.05,0.075,0.1,0.125,0.15,0.2],
                "loss":['ls','lad','huber']}]
 
-clf = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,n_jobs=3)
+clf = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,n_jobs=4)
 clf.fit(X_train, y_train)
 
 print(clf.best_params_)
@@ -40,3 +42,5 @@ res_test = pd.DataFrame(index=X_train.index )
 res_test["y"] = y_train
 res_test["pred(y)"] = clf.predict(X_train)
 res_test.to_csv("res/gbr_compound_res_train.csv")
+
+pickle.dump(clf, open("models/3gbr2.sav", 'wb'))
