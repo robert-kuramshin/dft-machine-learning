@@ -12,6 +12,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 
+import pickle
+
 #read data
 test = pd.read_csv("../data/battery/test.csv")
 train = pd.read_csv("../data/battery/train.csv")
@@ -263,3 +265,5 @@ res_test = pd.DataFrame(index=X_train.index )
 res_test["y"] = y_train
 res_test["pred(y)"] = clf.predict(X_train)
 res_test.to_csv("res/no-comp/krr_compound_res_train.csv")
+
+pickle.dump(clf, open("models/krr_no_compound.sav", 'wb'))
