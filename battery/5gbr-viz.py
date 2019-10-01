@@ -64,7 +64,7 @@ def main():
 
     x = inverse_transforms(x,"EA (eV)")
     y = inverse_transforms(y,"# Li")
-    Z = pd.read_csv("res/no-comp/krr_no_compound_test.csv")["pred(y)"].to_numpy().reshape((100,100))
+    Z = pd.read_csv("res/no-comp/gbr_no_compound_step_test.csv")["pred(y)"].to_numpy().reshape((100,100))
 
     X = x.reshape((100,100))
     Y = y.reshape((100,100))

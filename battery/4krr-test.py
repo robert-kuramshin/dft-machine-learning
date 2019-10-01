@@ -26,4 +26,4 @@ X_train = pd.read_csv("step/composite_feature_analysis.csv")
 res_test = pd.DataFrame(index=X_train.index )
 
 res_test["pred(y)"] = clf.predict(X_train)
-res_test.to_csv("res/no-comp/krr_no_compound_test.csv")
+res_test.to_csv("res/no-comp/krr_no_compound_step_test.csv")
