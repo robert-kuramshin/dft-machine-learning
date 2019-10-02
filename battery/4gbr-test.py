@@ -19,7 +19,7 @@ from sklearn.metrics import r2_score
 
 import pickle
 
-clf = pickle.load(open("models/krr_no_compound.sav", 'rb'))
+clf = pickle.load(open("models/gbr_no_compound.sav", 'rb'))
 
 X_train = pd.read_csv("step/composite_feature_analysis.csv")
 

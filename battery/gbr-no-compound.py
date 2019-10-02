@@ -67,7 +67,7 @@ tuned_parameters = [{'n_estimators': [100,150,200],
                     'learning_rate': [0.05,0.075,0.1,0.125,0.15,0.2],
                "loss":['ls','lad','huber']}]
 
-# clf = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,n_jobs=4)
+# clf = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,n_jobs=5)
 # clf.fit(X_train, y_train)
 
 # print(clf.best_params_)
@@ -119,7 +119,7 @@ y_val = in_y_train.loc[:validation_ratio*dataset_size]
 params = [{'n_estimators': [500], 'max_depth': [3,4,5],'min_samples_leaf':[3,4], 'min_samples_split': [3,4,5],
           'learning_rate': [0.1], 'loss': ['ls']}]
 
-clf = GridSearchCV(GradientBoostingRegressor(), params, cv=5,n_jobs=4,)
+clf = GridSearchCV(GradientBoostingRegressor(), params, cv=5,n_jobs=5,)
 clf.fit(X_train, y_train)
 
 y_true, y_pred = y_val, clf.predict(X_val)
@@ -149,7 +149,7 @@ for feature in feature_cols:
     X_test_cut = scaler.transform(X_test_cut)  
 
     
-    clf = GridSearchCV(GradientBoostingRegressor(), params, cv=5,n_jobs=4,)
+    clf = GridSearchCV(GradientBoostingRegressor(), params, cv=5,n_jobs=5,)
     clf.fit(X_train_cut, y_train_copy)
 
     y_true, y_pred = y_test_copy, clf.predict(X_test_cut)
@@ -188,7 +188,7 @@ f_imp.to_csv("res/no-comp/feature_importance_gbr_compound.csv")
 tuned_parameters = [{'n_estimators': [500], 'max_depth': [3,4,5],'min_samples_leaf':[3,4], 'min_samples_split': [3,4,5],
           'learning_rate': [0.1], 'loss': ['ls']}]
           
-reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5, n_jobs=4,
+reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5, n_jobs=5,
                 scoring='neg_mean_squared_error')
 
 mse = []
@@ -213,7 +213,7 @@ while (feature_cols):
     X_train = X_train.loc[:, feature_cols]
     X_val = X_val.loc[:, feature_cols]
 
-    reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5, n_jobs=4,
+    reg = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5, n_jobs=5,
                     scoring='neg_mean_squared_error')
 
     reg.fit(X_train, y_train.values.ravel())
@@ -257,7 +257,7 @@ tuned_parameters = [{'n_estimators': [100,150,200],
                     'learning_rate': [0.05,0.075,0.1,0.125,0.15,0.2],
                "loss":['ls','lad','huber']}]
 
-clf = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,n_jobs=4,)
+clf = GridSearchCV(GradientBoostingRegressor(), tuned_parameters, cv=5,n_jobs=5,)
 clf.fit(X_train, y_train)
 
 print(clf.best_params_)
