@@ -19,11 +19,11 @@ from sklearn.metrics import r2_score
 
 import pickle
 
-clf = pickle.load(open("models/krr_no_compound.sav", 'rb'))
+clf = pickle.load(open("models/3krr.sav", 'rb'))
 
-X_train = pd.read_csv("step/composite_feature_analysis.csv")
+X_train = pd.read_csv("res/X_test_step.csv")
 
 res_test = pd.DataFrame(index=X_train.index )
 
 res_test["pred(y)"] = clf.predict(X_train)
-res_test.to_csv("res/no-comp/krr_no_compound_step_test.csv")
+res_test.to_csv("res/krr_compound_step_test.csv")

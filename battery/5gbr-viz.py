@@ -10,38 +10,24 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MaxAbsScaler
 
 def inverse_transforms(x,name):
-    train = pd.read_csv("../data/battery/train.csv")
-
-    #specify feature column names
-    feature_cols = [
-    "HOMO (eV)",
-    "LUMO (eV)",
-    "EA (eV)",
-    "# C",
-    "# B",
-    "# O",
-    "HOMO-LUMO gap",
-    "# Li",
-    "# H",
-    "No. of Aromatic Rings",
-    ]
+    train = pd.read_csv("res/X_test_step.csv")
 
     #splitting into dependant and independant variables
-    X_train = train.loc[:, feature_cols]
+    X_train = train
 
     print (np.max(X_train[name]))
     print (np.min(X_train[name]))
 
-    #normalizing 
-    scaler_1 = StandardScaler()  
-    scaler_1.fit(X_train)
-    X_train2 = scaler_1.transform(X_train)
+    # #normalizing 
+    # scaler_1 = StandardScaler()  
+    # scaler_1.fit(X_train)
+    # X_train2 = scaler_1.transform(X_train)
 
-    scaler_2 = MaxAbsScaler()  
-    scaler_2.fit(X_train2)
-    X_train2 = scaler_2.transform(X_train2)
-    print (np.max(X_train2[:,X_train.columns.get_loc(name)]))
-    print (np.min(X_train2[:,X_train.columns.get_loc(name)]))
+    # scaler_2 = MaxAbsScaler()  
+    # scaler_2.fit(X_train2)
+    # X_train2 = scaler_2.transform(X_train2)
+    # print (np.max(X_train2[:,X_train.columns.get_loc(name)]))
+    # print (np.min(X_train2[:,X_train.columns.get_loc(name)]))
 
     df_empty = pd.DataFrame(np.zeros((10000,10)),columns=X_train.columns)
 
